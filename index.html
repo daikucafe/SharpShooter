@@ -28,10 +28,47 @@
 </head>
 <body onload="initGame();">
 
-<canvas id="screen" width="480" height="320">
-Your browser does not support the canvas element.
-</canvas>
+<canvas id="screen" width="480" height="320"></canvas>
+<canvas id="border" width="680" height="420"></canvas>
 
+<script type="text/javascript">
+	var c=document.getElementById("border");
+	var cxt=c.getContext("2d");
+	var cxt=c.getContext("2d");
+	cxt.fillStyle="#606c7a";
+	// Upper Left Corner
+	cxt.beginPath();
+	cxt.moveTo(20,20);
+	cxt.arc(20,20,20,Math.PI,3/2*Math.PI,false);
+	cxt.closePath();
+	cxt.fill();
+	// Top border
+	cxt.beginPath();
+	cxt.rect(20,0,640,20);
+	cxt.closePath();
+	cxt.fill();
+	// Upper Right Corner
+	cxt.beginPath();
+	cxt.moveTo(660,20);
+	cxt.arc(660,20,20,3/2*Math.PI,0,false);
+	cxt.closePath();
+	cxt.fill();
+	// Main rect
+	cxt.fillRect(0, 20, 680, 300)
+	// Bottom Left Corner
+	cxt.beginPath();
+	cxt.moveTo(20,400);
+	cxt.arc(20,400,20,Math.PI,Math.PI/2,true);
+	cxt.closePath();
+	cxt.fill();
+	// Bottom Right Corner
+	cxt.beginPath();
+	cxt.moveTo(580,320);
+	cxt.arc(580,320,100,0,Math.PI/2,false);
+	cxt.closePath();
+	cxt.fill();
+
+</script> 
 
 </body>
 </html>
