@@ -18,7 +18,7 @@ function Ship(){
 	this.draw = function(g){
 		g.save();
 		g.translate(this.x, this.y);
-		g.scale(0.2, 0.2);
+		g.scale(0.1, 0.1);
 		g.fillStyle = "rgb(10,10,10)";
 		g.moveTo(0,0);
 		g.lineTo(150,200);
@@ -28,14 +28,13 @@ function Ship(){
 		g.restore();
 	}
 	
-	this.move = function(delta, e){
-		this.leftPress = this.upPress = this.rightPress = this.downPress = false;
-		switch(e.KeyCode){
-			case 37: this.leftPress = true; break;
-			case 38: this.upPress = true; break;
-			case 39: this.rightPress = true; break;
-			case 40: this.downPress = true; break;
-		}
+	this.move = function(delta){
+		var timespeed = delta*this.speed;
+		var factorX, factorY;
+		factorX = (this.leftPress && !this.rightPress)? -1 : ((this.rightPress && !this.leftPress)? 1 : 0);
+		factorY = (this.upPress && !this.downPress)? -1 : ((this.downPress && !this.upPress)? 1 : 0);
+		this.x += factorX*timespeed;
+		this.y += factorY*timespeed;
 	}
 }
 function Prop(){
@@ -46,11 +45,44 @@ function Enemy(){
 }
 
 window.onLoad = initGame();
+document.onkeydown = keyPress(e);
+document.onkeyup = keyUp(e);
 
 var sw;
 var sh;
 
 var player;
+
+function keyPress(e){
+	if(e.keyCode==37){
+		player.leftPress = true;
+	}
+	if(e.keyCode==39){
+		player.rightPress = true;
+	}
+	if(e.keyCode==38){
+		player.upPress = true;
+	}
+	if(e.keyCode==40){
+		player.downPress = true;
+		alert("presionaste hacia abajo");
+	}
+}
+
+function keyUp(e){
+	if(e.keyCode==37){
+		player.leftPress = false;
+	}
+	if(e.keyCode==39){
+		player.rightPress = false;
+	}
+	if(e.keyCode==38){
+		player.upPress = false;
+	}
+	if(e.keyCode==40){
+		player.downPress = false;
+	}
+}
 
 function initGame(){
 	var canvas = document.getElementById("screen");
@@ -58,12 +90,20 @@ function initGame(){
 	sw = canvas.width;
 	sh = canvas.height;
 	
-	g.fillStyle="#606E00";
-	g.fillRect(0,0,sw,sh);
+	drawBackground(g);
 	
 	player = new Ship();
 	player.initShip(sw/2,sh-80);
-	player.draw(g);
+		player.draw(g);
+		player.move(10);
+
+}
+
+function drawBackground(g){
+	g.fillStyle="#406A00";
+	g.fillRect(0,0,sw,sh);
+	g.fillStyle="#606E00";
+	g.fillRect(10,10,sw,sh);
 }
 
 function step(){
