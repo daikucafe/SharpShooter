@@ -43,10 +43,7 @@
 	cxt.closePath();
 	cxt.fill();
 	// Top border
-	cxt.beginPath();
-	cxt.rect(20,0,640,20);
-	cxt.closePath();
-	cxt.fill();
+	cxt.fillRect(20,0,640,20);
 	// Upper Right Corner
 	cxt.beginPath();
 	cxt.moveTo(660,20);
@@ -54,7 +51,8 @@
 	cxt.closePath();
 	cxt.fill();
 	// Main rect
-	cxt.fillRect(0, 20, 680, 300)
+	cxt.fillRect(0, 20, 680, 300);
+	cxt.fillRect(0, 320, 580, 80);
 	// Bottom Left Corner
 	cxt.beginPath();
 	cxt.moveTo(20,400);
@@ -67,7 +65,53 @@
 	cxt.arc(580,320,100,0,Math.PI/2,false);
 	cxt.closePath();
 	cxt.fill();
-
+	// Bottom border
+	cxt.fillRect(20, 400, 560, 20);
+	
+	cxt.beginPath();
+	cxt.moveTo(35,20);
+	cxt.lineTo(215,20);	
+	cxt.moveTo(570,20);
+	cxt.lineTo(650,20);
+	cxt.closePath();
+	cxt.strokeStyle = "#B5017E";
+	cxt.stroke();	
+	
+	cxt.beginPath();
+	cxt.moveTo(35,29);
+	cxt.lineTo(215,29);
+	cxt.moveTo(570,29);
+	cxt.lineTo(650,29);
+	cxt.closePath();
+	cxt.strokeStyle = "#5A3B7E";
+	cxt.stroke();
+	
+	// Title
+	cxt.fillStyle="#A2AABA";
+	cxt.font = "14px 'Century Gothic'";
+	cxt.textBaseline = "middle";
+	cxt.save();
+	cxt.translate(227,26);
+	cxt.scale(1.4,1.2);
+	cxt.fillText("DOT  MATRIX  WITH  STEREO  SOUND", 0, 0);
+	cxt.restore();
+	
+	//Led
+	cxt.beginPath();
+	cxt.fillStyle="#9F5C5C";
+	cxt.arc(40,150,6,Math.PI*2,0,true);
+	//cxt.shadowColor="black";
+	//cxt.shadowBlur = 10;
+	cxt.closePath();
+	cxt.fill();
+	//Led - label
+	cxt.fillStyle="#A2AABA";
+	cxt.font = "12px 'Century Gothic'";
+	cxt.textBaseline = "middle";
+	cxt.save();
+	cxt.fillText("BATTERY", 23, 170);
+	cxt.restore();
+	
 </script> 
 
 </body>
