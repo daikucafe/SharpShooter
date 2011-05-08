@@ -3,11 +3,14 @@ function Shot(){
 	this.y = -10;
 	this.speed = 0.5;
 	this.alive = false;
+	this.sprite;
 	
 	this.fire = function(){
 		this.alive = true;
 		this.x = player.x+(player.w/2)-2;
 		this.y = player.y;
+		this.sprite = new Image();
+		this.sprite.src = "shot.png";
 	}
 	
 	this.move = function(delta){
@@ -17,7 +20,9 @@ function Shot(){
 	}
 	
 	this.draw = function(g){
-		g.fillRect(this.x, this.y, 5, 5);
+		//g.fillRect(this.x, this.y, 4, 4);
+		g.drawImage(this.sprite, this.x, this.y, 4,16);
+		
 	}
 }
 
@@ -42,7 +47,7 @@ function Ship(){
 	this.initShip = function(x, y){
 		this.x = x;
 		this.y = y;
-		this.sprite.src = "nave.PNG";
+		this.sprite.src = "nave.png";
 
 		for(var i=0; i<this.mag; i++){
 			this.shots[i] = new Shot();
@@ -109,6 +114,9 @@ var delta;
 
 
 function keyDown(e){
+	if(e.keyCode >= 32 && e.keyCode <= 40){
+		e.preventDefault();
+	}
 	if(e.keyCode==37){
 		player.leftPress = true;
 	}
@@ -159,10 +167,17 @@ function initGame(){
 }
 
 function drawBackground(g){
-	g.fillStyle="#406A00";
-	g.fillRect(0,0,sw,sh);
 	g.fillStyle="#606E00";
-	g.fillRect(10,10,sw,sh);
+	g.fillRect(0,0,sw,sh);
+	var img = new Image();
+	img.src = "logo.png";
+	g.drawImage(img, (sw/2)-(3*img.width/2), (sh/2)-(3*img.height/2), img.width*3, img.height*3);
+}
+
+function drawShadow(g){
+	g.fillStyle="rgba(58, 94, 4, 0.3)";
+	g.fillRect(0,0,10,sh);
+	g.fillRect(10, 0, sw, 10);
 }
 
 function step(){
@@ -178,6 +193,7 @@ function step(){
 			player.shots[i].draw(g);
 		}
 	}
+	this.drawShadow(g);
 	timer = new Date();
 	lastTime = timer.getTime();
 }
