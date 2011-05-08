@@ -1,3 +1,7 @@
+body{
+	overflow: hidden;
+}
+
 #screen{
 	position: absolute;
 	left: 50%;
@@ -15,6 +19,15 @@
 	margin-left: -340px;
 	top: 50%;
 	margin-top: -210px;
-	border-radius:31px;
 	z-index: 1;
 }
+
+#gbbody{
+	position: absolute;
+	left: 50%;
+	margin-left: -395px;
+	top: 50%;
+	margin-top: -310px;
+	z-index: 0;
+}
+

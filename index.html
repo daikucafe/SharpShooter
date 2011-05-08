@@ -24,95 +24,15 @@
 <html>
 <head>
 	<link rel="stylesheet" href="estail.css">
-	<script type="text/javascript" src="funk.js"></script>
 </head>
-<body onload="initGame();">
+<body>
 
 <canvas id="screen" width="480" height="320"></canvas>
 <canvas id="border" width="680" height="420"></canvas>
+<canvas id="gbbody" width="790" height="1000"></canvas>
 
-<script type="text/javascript">
-	var c=document.getElementById("border");
-	var cxt=c.getContext("2d");
-	var cxt=c.getContext("2d");
-	cxt.fillStyle="#606c7a";
-	// Upper Left Corner
-	cxt.beginPath();
-	cxt.moveTo(20,20);
-	cxt.arc(20,20,20,Math.PI,3/2*Math.PI,false);
-	cxt.closePath();
-	cxt.fill();
-	// Top border
-	cxt.fillRect(20,0,640,20);
-	// Upper Right Corner
-	cxt.beginPath();
-	cxt.moveTo(660,20);
-	cxt.arc(660,20,20,3/2*Math.PI,0,false);
-	cxt.closePath();
-	cxt.fill();
-	// Main rect
-	cxt.fillRect(0, 20, 680, 300);
-	cxt.fillRect(0, 320, 580, 80);
-	// Bottom Left Corner
-	cxt.beginPath();
-	cxt.moveTo(20,400);
-	cxt.arc(20,400,20,Math.PI,Math.PI/2,true);
-	cxt.closePath();
-	cxt.fill();
-	// Bottom Right Corner
-	cxt.beginPath();
-	cxt.moveTo(580,320);
-	cxt.arc(580,320,100,0,Math.PI/2,false);
-	cxt.closePath();
-	cxt.fill();
-	// Bottom border
-	cxt.fillRect(20, 400, 560, 20);
-	
-	cxt.beginPath();
-	cxt.moveTo(35,20);
-	cxt.lineTo(215,20);	
-	cxt.moveTo(570,20);
-	cxt.lineTo(650,20);
-	cxt.closePath();
-	cxt.strokeStyle = "#B5017E";
-	cxt.stroke();	
-	
-	cxt.beginPath();
-	cxt.moveTo(35,29);
-	cxt.lineTo(215,29);
-	cxt.moveTo(570,29);
-	cxt.lineTo(650,29);
-	cxt.closePath();
-	cxt.strokeStyle = "#5A3B7E";
-	cxt.stroke();
-	
-	// Title
-	cxt.fillStyle="#A2AABA";
-	cxt.font = "14px 'Century Gothic'";
-	cxt.textBaseline = "middle";
-	cxt.save();
-	cxt.translate(227,26);
-	cxt.scale(1.4,1.2);
-	cxt.fillText("DOT  MATRIX  WITH  STEREO  SOUND", 0, 0);
-	cxt.restore();
-	
-	//Led
-	cxt.beginPath();
-	cxt.fillStyle="#9F5C5C";
-	cxt.arc(40,150,6,Math.PI*2,0,true);
-	//cxt.shadowColor="black";
-	//cxt.shadowBlur = 10;
-	cxt.closePath();
-	cxt.fill();
-	//Led - label
-	cxt.fillStyle="#A2AABA";
-	cxt.font = "12px 'Century Gothic'";
-	cxt.textBaseline = "middle";
-	cxt.save();
-	cxt.fillText("BATTERY", 23, 170);
-	cxt.restore();
-	
-</script> 
 
 </body>
+	<script type="text/javascript" src="funk.js"></script>
+	<script type="text/javascript" src="gameboy.js"></script>
 </html>
