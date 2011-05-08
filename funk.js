@@ -92,7 +92,7 @@ function Enemy(){
 }
 
 window.onLoad = initGame();
-window.onkeypress = keyPress;
+window.onkeydown = keyDown;
 window.onkeyup = keyUp;
 
 var sw;
@@ -108,7 +108,7 @@ var lastTime;
 var delta;
 
 
-function keyPress(e){
+function keyDown(e){
 	if(e.keyCode==37){
 		player.leftPress = true;
 	}
@@ -121,7 +121,7 @@ function keyPress(e){
 	if(e.keyCode==40){
 		player.downPress = true;
 	}
-	if(e.keyCode == 0){
+	if(e.keyCode == 32){
 		player.spacePress = true;
 	}
 }
