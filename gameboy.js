@@ -60,23 +60,23 @@ function drawGbBody(){
 	gb.closePath();
 	gb.fill();
 	//Switch Label
-	gb.font = "bold 18px 'Century Gothic'";
+	gb.font = "bold 18px sans-serif";
 	gb.textBaseline = "middle";
-	gb.fillText("OFF • ON", 118, 22);
+	gb.fillText("OFF • ON", 117, 23);
 	
 	//GB Body label
 	gb.fillStyle="#453E67";
-	gb.font = "bold 24px 'Century Gothic'";
+/*	gb.font = "bold 24px sans-serif";
 	gb.textBaseline = "middle";
 	gb.save();
 	gb.translate(100,580);
 	gb.scale(1.4,1);
 	gb.fillText("Loltendo", 0,0);
-	gb.restore();
-	gb.font = "italic 28px 'Century Gothic'";
+	gb.restore();*
+*/	gb.font = "italic 28px sans-serif";
 	gb.textBaseline = "middle";
 	gb.save();
-	gb.translate(253,576);
+	gb.translate(50,576);
 	gb.scale(1.4,1.4);
 	gb.fillText("SharpShooter", 0,0);
 	gb.restore();
@@ -136,7 +136,7 @@ function drawGbBorder(){
 	cxt.fill();
 	// Bottom border
 	cxt.fillRect(20, 400, 560, 20);
-
+	
 	cxt.beginPath();
 	cxt.moveTo(35,20);
 	cxt.lineTo(215,20);	
@@ -157,17 +157,17 @@ function drawGbBorder(){
 
 	// Title
 	cxt.fillStyle="#A2AABA";
-	cxt.font = "14px 'Century Gothic'";
+	cxt.font = "14px sans-serif";
 	cxt.textBaseline = "middle";
 	cxt.save();
-	cxt.translate(227,26);
-	cxt.scale(1.4,1.2);
+	cxt.translate(225,24);
+	cxt.scale(1.3,1.2);
 	cxt.fillText("DOT  MATRIX  WITH  STEREO  SOUND", 0, 0);
 	cxt.restore();
 
 	//Led - label
 	cxt.fillStyle="#A2AABA";
-	cxt.font = "12px 'Century Gothic'";
+	cxt.font = "12px sans-serif";
 	cxt.textBaseline = "middle";
 	cxt.fillText("BATTERY", 23, 170);
 	
@@ -176,3 +176,19 @@ function drawGbBorder(){
 
 drawGbBody();
 drawGbBorder();
+
+var bg = document.getElementById("bg").getContext("2d");
+function starBG(){
+	bg.canvas.width  = window.innerWidth;
+	bg.canvas.height = window.innerHeight;
+	var colors = ["#EEEEF2", "#B4B4C6", "#B7B8C9", "#A5A6BB", "#78799A", "#585976", "#404156"];
+
+	for (i=0; i<300; i++){
+		bg.fillStyle=colors[Math.round(Math.random()*colors.length)-1];
+		randW = Math.round(Math.random()*bg.canvas.width);
+		randH = Math.round(Math.random()*bg.canvas.height);
+		bg.fillRect(randW, randH, 3, 3);
+	}
+}
+starBG();
+
