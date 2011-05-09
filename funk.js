@@ -1,3 +1,26 @@
+function ResourceManager(){
+	this.urlList = new Array();
+	this.imgVault = new Array();
+	this.getSprite = function(string){
+		var temp;
+		var search = this.urlList.indexOf(string);
+		if(search >= 0){
+			temp = this.imgVault[search];
+		} else {
+			temp = this.saveSprite(string);
+		}
+		return temp;
+	}
+	this.saveSprite = function(string){
+		var temp = new Image();
+		temp.src = string;
+		this.urlList.push(string);
+		this.imgVault.push(temp);
+		return temp;
+	}
+}
+		
+
 function Shot(){
 	this.x = -10;
 	this.y = -10;
@@ -9,8 +32,7 @@ function Shot(){
 		this.alive = true;
 		this.x = player.x+(player.w/2)-2;
 		this.y = player.y;
-		this.sprite = new Image();
-		this.sprite.src = "shot.png";
+		this.sprite = rm.getSprite("shot.png");
 	}
 	
 	this.move = function(delta){
@@ -36,7 +58,7 @@ function Ship(){
 	this.mag = 6;
 	this.bullet = 0;
 	this.lastShot = 0;
-	this.sprite = new Image();
+	this.sprite;
 	
 	this.leftPress = false;
 	this.upPress = false;
@@ -47,7 +69,7 @@ function Ship(){
 	this.initShip = function(x, y){
 		this.x = x;
 		this.y = y;
-		this.sprite.src = "nave.png";
+		this.sprite = rm.getSprite("nave.png");
 
 		for(var i=0; i<this.mag; i++){
 			this.shots[i] = new Shot();
@@ -65,8 +87,6 @@ function Ship(){
 	}
 	
 	this.draw = function(g){
-		g.fillStyle = "rgb(10,10,10)";
-		//g.fillRect(this.x, this.y, this.w, this.h);
 		g.drawImage(this.sprite, this.x, this.y, this.w, this.h);
 
 	}
@@ -89,6 +109,7 @@ function Ship(){
 		if(this.spacePress) this.tryToFire();
 	}
 }
+
 function Prop(){
 
 }
@@ -100,17 +121,19 @@ window.onLoad = initGame();
 window.onkeydown = keyDown;
 window.onkeyup = keyUp;
 
-var sw;
-var sh;
+var sw; //screen width
+var sh; //screen height
 
-var canvas;
-var g;
+var canvas; //canvas object
+var g; // graphic context
 
-var player;
+var player; //player ship
 
-var timer;
-var lastTime;
-var delta;
+var rm; //resource manager, can preload images.
+
+var timer; //manages time
+var lastTime; //time of the last loop
+var delta; //difference between last and current loop
 
 
 function keyDown(e){
@@ -154,6 +177,7 @@ function keyUp(e){
 }
 
 function initGame(){
+	rm = new ResourceManager();
 	canvas = document.getElementById("screen");
 	g = canvas.getContext("2d");
 	g.mozImageSmoothingEnabled = false;
@@ -169,9 +193,6 @@ function initGame(){
 function drawBackground(g){
 	g.fillStyle="#606E00";
 	g.fillRect(0,0,sw,sh);
-	var img = new Image();
-	img.src = "logo.png";
-	g.drawImage(img, (sw/2)-(3*img.width/2), (sh/2)-(3*img.height/2), img.width*3, img.height*3);
 }
 
 function drawShadow(g){
