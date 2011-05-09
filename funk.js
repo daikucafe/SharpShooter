@@ -117,6 +117,18 @@ function Enemy(){
 
 }
 
+function Texture(texname, x, y, w, h){
+	this.image = rm.getSprite(texname);
+	this.zoom = 2;
+	this.draw = function(g){
+		for(var i=0; i < w/(this.image.width*this.zoom); i++){
+			for(var j=0; j < h/(this.image.height*this.zoom); j++){
+				g.drawImage(this.image, x + i*(this.image.width*this.zoom), y + j*(this.image.height*this.zoom), this.image.width*this.zoom, this.image.height*this.zoom);
+			}
+		}
+	}
+}
+
 window.onLoad = initGame();
 window.onkeydown = keyDown;
 window.onkeyup = keyUp;
@@ -134,7 +146,7 @@ var rm; //resource manager, can preload images.
 var timer; //manages time
 var lastTime; //time of the last loop
 var delta; //difference between last and current loop
-
+var bg;
 
 function keyDown(e){
 	if(e.keyCode >= 32 && e.keyCode <= 40){
@@ -187,6 +199,7 @@ function initGame(){
 	player = new Ship();
 	player.initShip(sw/2-player.w/2,sh-80);
 	lastTime = timer.getTime();
+	bg = new Texture("texsea.png",0,0,sw,sh);
 	setInterval("step()", 1000/60);
 }
 
@@ -206,6 +219,7 @@ function step(){
 	delta = timer.getTime() - lastTime;
 	g.clearRect(0,0,sw,sh);
 	this.drawBackground(g);
+	bg.draw(g);
 	player.move(delta);
 	player.draw(g);
 	for(var i=0; i<player.mag; i++){
