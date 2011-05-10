@@ -103,6 +103,17 @@ function flash(){
 	drawLed(on);
 }
 
+function drawScreen(){
+	cxt.fillStyle="#606E00";
+	cxt.fillRect(100,50,480,320);
+}
+
+function drawBorderShadow(){
+	cxt.fillStyle="rgba(58, 94, 4, 0.3)";
+	cxt.fillRect(100,50,10,320);
+	cxt.fillRect(110, 50, 470, 10);
+}
+
 function drawGbBorder(){
 	cxt.fillStyle="#606c7a";
 	// Upper Left Corner
@@ -170,6 +181,8 @@ function drawGbBorder(){
 	cxt.font = "12px 'Century Gothic'";
 	cxt.textBaseline = "middle";
 	cxt.fillText("BATTERY", 23, 170);
+	drawScreen();
+	drawBorderShadow();
 	
 	setInterval("flash()", 100);
 }

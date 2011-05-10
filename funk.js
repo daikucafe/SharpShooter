@@ -19,20 +19,18 @@ function ResourceManager(){
 		return temp;
 	}
 }
-		
 
 function Shot(){
 	this.x = -10;
 	this.y = -10;
 	this.speed = 0.5;
 	this.alive = false;
-	this.sprite;
+	this.sprite = rm.getSprite("shot.png");
 	
 	this.fire = function(){
 		this.alive = true;
-		this.x = player.x+(player.w/2)-2;
+		this.x = player.x+(player.w/2)-((this.sprite.width*zoom)/2);
 		this.y = player.y;
-		this.sprite = rm.getSprite("shot.png");
 	}
 	
 	this.move = function(delta){
@@ -42,8 +40,7 @@ function Shot(){
 	}
 	
 	this.draw = function(g){
-		//g.fillRect(this.x, this.y, 4, 4);
-		g.drawImage(this.sprite, this.x, this.y, 4,16);
+		g.drawImage(this.sprite, this.x, this.y, this.sprite.width*zoom, this.sprite.height*zoom);
 		
 	}
 }
@@ -69,7 +66,9 @@ function Ship(){
 	this.initShip = function(x, y){
 		this.x = x;
 		this.y = y;
-		this.sprite = rm.getSprite("nave.png");
+		this.sprite = new Sprite("nave.png", 3);
+		this.w = this.sprite.frameWidth;
+		this.h = this.sprite.frameHeight;
 
 		for(var i=0; i<this.mag; i++){
 			this.shots[i] = new Shot();
@@ -87,7 +86,7 @@ function Ship(){
 	}
 	
 	this.draw = function(g){
-		g.drawImage(this.sprite, this.x, this.y, this.w, this.h);
+		this.sprite.draw(g, this.x, this.y);
 
 	}
 	
@@ -106,6 +105,9 @@ function Ship(){
 		if(this.x <= 0) this.x = 0;
 		if(this.y >= sh-this.h) this.y = sh-this.h;
 		if(this.y <= 0) this.y = 0;
+		this.sprite.getFrame(0);
+		if(this.leftPress && !this.rightPress) this.sprite.getFrame(1);
+		else if(this.rightPress && !this.leftPress) this.sprite.getFrame(2);
 		if(this.spacePress) this.tryToFire();
 	}
 }
@@ -119,15 +121,38 @@ function Enemy(){
 
 function Texture(texname, x, y, w, h){
 	this.image = rm.getSprite(texname);
-	this.zoom = 2;
 	this.draw = function(g){
-		for(var i=0; i < w/(this.image.width*this.zoom); i++){
-			for(var j=0; j < h/(this.image.height*this.zoom); j++){
-				g.drawImage(this.image, x + i*(this.image.width*this.zoom), y + j*(this.image.height*this.zoom), this.image.width*this.zoom, this.image.height*this.zoom);
+		for(var i=0; i < w/(this.image.width*zoom); i++){
+			for(var j=0; j < h/(this.image.height*zoom); j++){
+				g.drawImage(this.image, x + i*(this.image.width*zoom), y + j*(this.image.height*zoom), this.image.width*zoom, this.image.height*zoom);
 			}
 		}
 	}
 }
+
+function Sprite(source, frameNumber){
+	this.image = rm.getSprite(source);
+	this.frameWidth = (this.image.width/frameNumber)*zoom;
+	this.frameHeight = this.image.height*zoom;
+	this.frame = 0;
+	this.totalFrames = frameNumber;
+	this.nextFrame = function(){
+		this.frame++;
+		if(this.frame >= this.totalFrames){
+			this.frame = 0;
+		}
+	}
+	this.getFrame = function(number){
+		if(number < this.totalFrames){
+			this.frame = number;
+		}
+	}
+	this.draw = function(g, x, y){
+		g.drawImage(this.image, this.frame*(this.frameWidth/zoom), 0, this.frameWidth/zoom, this.frameHeight/zoom, x, y, this.frameWidth, this.frameHeight);
+	}
+}
+	
+	
 
 window.onLoad = initGame();
 window.onkeydown = keyDown;
@@ -135,6 +160,7 @@ window.onkeyup = keyUp;
 
 var sw; //screen width
 var sh; //screen height
+var zoom; //pixel zoom
 
 var canvas; //canvas object
 var g; // graphic context
@@ -189,6 +215,7 @@ function keyUp(e){
 }
 
 function initGame(){
+	zoom = 2;
 	rm = new ResourceManager();
 	canvas = document.getElementById("screen");
 	g = canvas.getContext("2d");
@@ -203,22 +230,10 @@ function initGame(){
 	setInterval("step()", 1000/60);
 }
 
-function drawBackground(g){
-	g.fillStyle="#606E00";
-	g.fillRect(0,0,sw,sh);
-}
-
-function drawShadow(g){
-	g.fillStyle="rgba(58, 94, 4, 0.3)";
-	g.fillRect(0,0,10,sh);
-	g.fillRect(10, 0, sw, 10);
-}
-
 function step(){
 	timer = new Date();
 	delta = timer.getTime() - lastTime;
 	g.clearRect(0,0,sw,sh);
-	this.drawBackground(g);
 	bg.draw(g);
 	player.move(delta);
 	player.draw(g);
@@ -228,7 +243,6 @@ function step(){
 			player.shots[i].draw(g);
 		}
 	}
-	this.drawShadow(g);
 	timer = new Date();
 	lastTime = timer.getTime();
 }
