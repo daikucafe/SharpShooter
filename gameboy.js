@@ -181,17 +181,16 @@ function drawGbBorder(){
 	cxt.font = "12px sans-serif";
 	cxt.textBaseline = "middle";
 	cxt.fillText("BATTERY", 23, 170);
-	drawScreen();
-	drawBorderShadow();
-	
 	setInterval("flash()", 100);
 }
 
 drawGbBody();
 drawGbBorder();
+drawScreen();
+drawBorderShadow();
 
-var bg = document.getElementById("bg").getContext("2d");
 function starBG(){
+	var bg = document.getElementById("bg").getContext("2d");
 	bg.canvas.width  = window.innerWidth;
 	bg.canvas.height = window.innerHeight;
 	var colors = ["#EEEEF2", "#B4B4C6", "#B7B8C9", "#A5A6BB", "#78799A", "#585976", "#404156"];
