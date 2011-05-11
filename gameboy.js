@@ -62,7 +62,7 @@ function drawGbBody(){
 	//Switch Label
 	gb.font = "bold 18px sans-serif";
 	gb.textBaseline = "middle";
-	gb.fillText("OFF • ON", 117, 23);
+	gb.fillText("OFF Â• ON", 117, 23);
 	
 	//GB Body label
 	gb.fillStyle="#453E67";
@@ -101,6 +101,17 @@ function flash(){
 		on = false;
 	}
 	drawLed(on);
+}
+
+function drawScreen(){
+	cxt.fillStyle="#606E00";
+	cxt.fillRect(100,50,480,320);
+}
+
+function drawBorderShadow(){
+	cxt.fillStyle="rgba(58, 94, 4, 0.3)";
+	cxt.fillRect(100,50,10,320);
+	cxt.fillRect(110, 50, 470, 10);
 }
 
 function drawGbBorder(){
@@ -170,6 +181,8 @@ function drawGbBorder(){
 	cxt.font = "12px sans-serif";
 	cxt.textBaseline = "middle";
 	cxt.fillText("BATTERY", 23, 170);
+	drawScreen();
+	drawBorderShadow();
 	
 	setInterval("flash()", 100);
 }
