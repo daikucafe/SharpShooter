@@ -196,7 +196,7 @@ function starBG(){
 	var colors = ["#EEEEF2", "#B4B4C6", "#B7B8C9", "#A5A6BB", "#78799A", "#585976", "#404156"];
 
 	for (i=0; i<300; i++){
-		bg.fillStyle=colors[Math.round(Math.random()*colors.length)-1];
+		bg.fillStyle=colors[Math.floor(Math.random()*colors.length)];
 		randW = Math.round(Math.random()*bg.canvas.width);
 		randH = Math.round(Math.random()*bg.canvas.height);
 		bg.fillRect(randW, randH, 3, 3);
