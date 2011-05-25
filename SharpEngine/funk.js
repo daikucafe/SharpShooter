@@ -118,7 +118,7 @@ function Prop(){
 function Enemy(){
 
 }
-
+/*
 function Texture(texname, x, y, w, h){
 	this.image = rm.getSprite(texname);
 	this.draw = function(g){
@@ -128,7 +128,7 @@ function Texture(texname, x, y, w, h){
 			}
 		}
 	}
-}
+}*/
 
 function Sprite(source, frameNumber){
 	this.image = rm.getSprite(source);
@@ -226,7 +226,7 @@ function initGame(){
 	player = new Ship();
 	player.initShip(sw/2-player.w/2,sh-80);
 	lastTime = timer.getTime();
-	bg = new Texture("texsea.png",0,0,sw,sh);
+	//bg = new Texture("texsea.png",0,0,sw,sh);
 	setInterval("step()", 1000/60);
 }
 
@@ -234,7 +234,7 @@ function step(){
 	timer = new Date();
 	delta = timer.getTime() - lastTime;
 	g.clearRect(0,0,sw,sh);
-	bg.draw(g);
+	//bg.draw(g);
 	player.move(delta);
 	player.draw(g);
 	for(var i=0; i<player.mag; i++){
