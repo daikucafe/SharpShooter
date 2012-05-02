@@ -1,1 +1,0 @@
-/* Superclass to all movable elements in game. */
